@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json.schemastore.org/proxies",
+    "proxies": {
+        "Root Redirector to HTTP Function": {
+            "matchCondition": {
+                "route": "{*path}",
+                "methods": [
+                    "GET",
+                    "POST"
+                ]
+            },
+            "backendUri": "https://urlredirectfunction.azurewebsites.net/api/UrlRedirect?code=PJwIpAteCb7An1pCukfnHLhaB9qLjSHRmJQ44ohnzV8Z/7J116ilhg=="
+        }
+    }
+}

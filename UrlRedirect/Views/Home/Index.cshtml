@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+    <div class="container-fluid">
+        <div class="row min-vh-100 justify-content-center">
+            <div class="col-md-5">
+                <div class="w-100 py-4">
+
+                    <form method="post">
+                        <div class="mb-4 input__group">
+                            <input id="UrlToRedirect" type="text" class="form-control js__input__ui" onkeypress="CleanInput()" placeholder="Url" autofocus />
+                            <i class="fas fa-user"></i>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5 ">
+                <button type="button" onclick="GetURL()" class="btn btn-pastel-purplelight px-5 py-2">Asignar Dominio <i class="fas fa-arrow-right fa-xs ml-2"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <br/>
+            Url: <h2 id="ResponseText"></h2>
+        </div>
+       
+    </div>
+
+
+
+
+
+
+@section scripts {
+    <script>
+    function CleanInput() {
+        $('#ResponseText').html("");
+    }
+
+     function GetURL() {
+            var model = {
+                UrlToRedirect: $('#UrlToRedirect').val().trim()
+            };
+            console.log(model)
+            $.ajax({
+                url: "/Home/AssingSubDomainUrl",
+                method: "POST",
+                data: JSON.stringify(model),
+                dataType: "JSON",
+                contentType: 'application/json',
+                async: true,
+                success: function (response) {
+                    if (response.content == "1") {
+                        $('#ResponseText').html(response.message);
+                    }
+                },
+                beforeSend: function () {
+                    $("body").fadeIn(function () {
+                        $(".modaldisplay").show();
+                    });
+                },
+                complete: function () {
+                    $(".modaldisplay").hide();
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                    console.log(xhr.status + ": " + xhr.responseText);
+
+                }
+            });
+        }
+    </script>
+}
